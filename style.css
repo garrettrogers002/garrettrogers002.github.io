@@ -23,7 +23,7 @@ body {
     row-gap: 2px;
 }
 #playableArea {
-    height: 350px;
+    height: 450px;
     width: 850px;
     background-color: beige;
     margin: 20px;
@@ -219,4 +219,20 @@ body {
 #sourceLink {
     color: white;
     text-decoration: none;
+}
+#sourceCodeMSLink {
+    color: white;
+    text-decoration: none;
+}
+#sourceCodeMS {
+    width: 130px;
+    background-color: #2B2D42;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 15px;
+    text-align: center;
+    margin: 20px;
+}
+#sourceCodeMS:hover {
+    background-color: #308A83;
 }

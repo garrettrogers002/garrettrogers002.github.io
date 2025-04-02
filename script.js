@@ -492,7 +492,7 @@ function showHome() {
     fun.style.display = "none";
     ms.style.display = "none";
     ttt.style.display = "none"
-    home.style.display = "flex"
+    home.style.display = "block"
 
     document.getElementById("TTTButton").classList.remove("active");
     document.getElementById("MSButton").classList.remove("active");
