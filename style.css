@@ -4,8 +4,101 @@ html {
 body {
     height: 100%;
     margin: 0;
+    background-color: #EDF2F4;
+}
+#logoDiv {
+    height: 80px;
+    width: 80px;
 }
 #logo {
-    height: 100px;
-    width: 100px;
+    max-height: 100%;
+    max-width: 100%;
+}
+#parentDiv {
+    display: grid;
+    grid-template-columns: 20px 20px 20px 20px 20px 20px 20px 20px 20px;
+    grid-template-rows: 20px 20px 20px 20px 20px 20px 20px 20px 20px;
+    column-gap: 2px;
+    row-gap: 2px;
+}
+#playableArea {
+    height: 350px;
+    width: 850px;
+    background-color: beige;
+    margin: 20px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.square {
+    background-color: gray;
+    transition: 0.2s;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+.square:hover {
+    background-color: darkgray;
+    transition: 0.2s;
+}
+#titleDiv {
+
+    margin-bottom: 20px;
+    font-weight: bold;
+    background-color: #c4c4b0;
+    padding: 5px;
+    border-radius: 5px;
+}
+#minesAndReset {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#mineCount {
+    margin: 5px;
+    background-color: darkgray;
+    padding: 3px;
+    color: white
+}
+#reset {
+    margin: 5px;
+}
+.pressed {
+    background-color: #3C4A4E;
+    pointer-events: none;
+    transition: 0.2s;
+    text-align: center;
+}
+.bomb {
+    background-color: red;
+    pointer-events: none;
+    transition: 0.25s;
+}
+#result {
+    margin: 5px;
+    display: block;
+}
+#minesweeperButton {
+    background-color: #8D99AE;
+}
+#buttonContainer {
+    display: block;
+}
+li {
+    float: left;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #2B2D42;
+    cursor: pointer;
+}
+.active {
+    background-color: #04AA6D;
+}
+#nav {
+    background-color: #330300;
 }
