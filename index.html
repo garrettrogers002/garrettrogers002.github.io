@@ -11,18 +11,28 @@
     <div id="nav">
         <ul>
             <li>
-                <div id="logoDiv">
+                <div id="logoDiv" onclick="showHome()">
                     <img id="logo" src="logo2.png" alt="logo">
                 </div>
             </li>
             <li>
-                <div onclick="showMS()">Minesweeper</div>
+                <div id="MSButton" onclick="showMS()">Minesweeper</div>
             </li>
             <li>
-                <div onclick="showTTT()">Tic Tac Toe</div>
+                <div id="TTTButton" onclick="showTTT()">Tic Tac Toe</div>
+            </li>
+            <li>
+                <div id="FUNN" onclick="showFUNN()">FUN</div>
             </li>
         </ul>
     </div>
+
+    <!-- THIS IS FOR THE HOME PAGE -->
+
+    <h1 id="homestuff">WELCOME TO GARY'S WEBSITE!!!</h1>
+
+    <!-- THIS IS THE END OF HOMEPAGE STUFF -->
+
     <!-- MINESWEEPER GAME -->
     <div id="playableArea">
         <div id="titleDiv" onclick="startGame()">Minesweeper</div>
@@ -148,8 +158,9 @@
         </div>
         <div id="resultTTT" class="resultTTT"></div>
       </div>
-
-    <!-- <img src="https://media.tenor.com/dr3YOOOszlAAAAAM/rat-dance.gif" alt="dancing rat"> -->
+    <div id="FUNNContent">
+        <img src="https://media.tenor.com/dr3YOOOszlAAAAAM/rat-dance.gif" alt="dancing rat">
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@ body {
 #logoDiv {
     height: 80px;
     width: 80px;
+    background-color: #EDF2F4;
 }
 #logo {
     max-height: 100%;
@@ -85,20 +86,37 @@ body {
 #buttonContainer {
     display: block;
 }
-li {
+#nav li {
     float: left;
-    color: white;
+    /* color: white; */
 }
-ul {
+#nav li div {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#nav li div:hover {
+    background-color: #8D99AE;
+}
+/* #nav li div .active {
+    background-color: #EF233C;
+} */
+#nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #2B2D42;
+    display: flex;
+    align-items: center;
     cursor: pointer;
 }
 .active {
-    background-color: #04AA6D;
+    background-color: #EF233C;
 }
 #nav {
     background-color: #330300;
@@ -180,4 +198,7 @@ ul {
     height: 90px;
     width: 350px;
     margin: 50px;
+}
+#FUNNContent {
+    display: none;
 }

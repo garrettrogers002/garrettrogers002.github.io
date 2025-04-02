@@ -1,4 +1,3 @@
-// this has nothing so far
 // *****************************************************
 // minesweeper stuff
 
@@ -19,13 +18,15 @@ let play = false;
 
 // x = col, y = row
 
-function checkWin() {
+function checkWin() { // this function is not working for some reason
     if (pressedCount === 71) {
         play = false;
-        document.getElementById("resultMS").textContent = "You won!!!";
-        document.getElementById("resultMS").style.display = "block";
+        let resultDiv = document.getElementById("resultMS");
+        resultDiv.textContent = "You won!!!";
+        resultDiv.style.display = "block";
+        return true;
     }
-    return;
+    return false;
 }
 
 
@@ -199,21 +200,7 @@ function revealEmptySquares(square) {
 // end of minesweeper code
 // *************************************************
 
-function showMS() {
-    let playableArea = document.getElementById("playableArea");
 
-    if (playableArea.style.display === "flex") {
-        playableArea.style.display = "none";
-    }
-    else {
-        playableArea.style.display = "flex";
-    }
-}
-function activeTab(input) {
-    if (!(input.classList.contains = "active")) {
-        input.classList.add(active)
-    }
-}
 
 // ************************************************
 // tic tac toe code
@@ -442,13 +429,72 @@ function reset() {
 // end of tic tac toe code
 // **********************************************************************
 
+
+// ***********************************************************************
+// SHOW AND HIDE STUFF GOING ON HERE
 function showTTT() {
     let tictactoe = document.getElementById("tictactoe");
+    let minesweeper = document.getElementById("playableArea");
+    let fun = document.getElementById("FUNNContent");
 
-    if (tictactoe.style.display === "none") {
-        tictactoe.style.display = "flex";
-    } 
-    else {
-        tictactoe.style.display = "none";
-    }
+    tictactoe.style.display = "flex";
+    minesweeper.style.display = "none";
+    fun.style.display = "none";
+    document.getElementById("homestuff").style.display = "none";
+
+    document.getElementById("TTTButton").classList.add("active");
+    document.getElementById("MSButton").classList.remove("active");
+    document.getElementById("FUNN").classList.remove("active");
+}
+
+function showMS() {
+    let playableArea = document.getElementById("playableArea");
+    let tictactoe = document.getElementById("tictactoe");
+    let fun = document.getElementById("FUNNContent");
+
+    document.getElementById("TTTButton").classList.remove("active");
+    document.getElementById("MSButton").classList.add("active");
+    document.getElementById("FUNN").classList.remove("active");
+
+    playableArea.style.display = "flex";
+    tictactoe.style.display = "none";
+    fun.style.display = "none";
+    document.getElementById("homestuff").style.display = "none";
+
+}
+// function activeTab(input) {
+//     if (!(input.classList.contains = "active")) {
+//         input.classList.add(active)
+//     }
+// }
+
+function showFUNN() {
+    let fun = document.getElementById("FUNNContent");
+    let ms = document.getElementById("playableArea");
+    let ttt = document.getElementById("tictactoe")
+
+    fun.style.display = "flex";
+    ms.style.display = "none";
+    ttt.style.display = "none";
+    document.getElementById("homestuff").style.display = "none";
+
+    document.getElementById("FUNN").classList.add("active");
+    document.getElementById("TTTButton").classList.remove("active");
+    document.getElementById("MSButton").classList.remove("active");
+
+}
+function showHome() {
+    let fun = document.getElementById("FUNNContent");
+    let ms = document.getElementById("playableArea");
+    let ttt = document.getElementById("tictactoe");
+    let home = document.getElementById("homestuff");
+
+    fun.style.display = "none";
+    ms.style.display = "none";
+    ttt.style.display = "none"
+    home.style.display = "flex"
+
+    document.getElementById("TTTButton").classList.remove("active");
+    document.getElementById("MSButton").classList.remove("active");
+    document.getElementById("FUNN").classList.remove("active");
 }
