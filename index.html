@@ -7,6 +7,7 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <!-- NAVIGATION STUFF -->
     <div id="nav">
         <ul>
             <li>
@@ -16,6 +17,9 @@
             </li>
             <li>
                 <div onclick="showMS()">Minesweeper</div>
+            </li>
+            <li>
+                <div onclick="showTTT()">Tic Tac Toe</div>
             </li>
         </ul>
     </div>
@@ -119,8 +123,32 @@
             <div id="81" class="square" onclick="press(this)" oncontextmenu="return flag(this, event)"></div>
 
         </div>
-        <div id="result">Press "Minesweeper" to start!</div>
+        <div id="resultMS">Press "Minesweeper" to start!</div>
     </div>
+    <!-- END OF MINESWEEPER GAME -->
+
+    <div id="tictactoe">
+        <div class="parent">
+          <div id="g1" class="blank" onclick="fillBox('g1')"></div>
+          <div id="g2" class="blank" onclick="fillBox('g2')"></div>
+          <div id="g3" class="blank" onclick="fillBox('g3')"></div>
+    
+          <div id="g4" class="blank" onclick="fillBox('g4')"></div>
+          <div id="g5" class="blank" onclick="fillBox('g5')"></div>
+          <div id="g6" class="blank" onclick="fillBox('g6')"></div>
+    
+          <div id="g7" class="blank" onclick="fillBox('g7')"></div>
+          <div id="g8" class="blank" onclick="fillBox('g8')"></div>
+          <div id="g9" class="blank" onclick="fillBox('g9')"></div>
+        </div>
+        <div id="resetButton">
+          <button id="yolo" type="button" onclick="reset()">
+          reset
+          </button>
+        </div>
+        <div id="resultTTT" class="resultTTT"></div>
+      </div>
+
     <!-- <img src="https://media.tenor.com/dr3YOOOszlAAAAAM/rat-dance.gif" alt="dancing rat"> -->
     <script src="script.js"></script>
 </body>

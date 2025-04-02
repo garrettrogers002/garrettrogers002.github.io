@@ -22,8 +22,8 @@ let play = false;
 function checkWin() {
     if (pressedCount === 71) {
         play = false;
-        document.getElementById("result").textContent = "You won!!!";
-        document.getElementById("result").style.display = "block";
+        document.getElementById("resultMS").textContent = "You won!!!";
+        document.getElementById("resultMS").style.display = "block";
     }
     return;
 }
@@ -68,8 +68,8 @@ function press(input) {
             coordsToId(coords);
             if (board[col][row] === "M") {
                 input.classList.add("bomb");
-                document.getElementById("result").textContent = "You lose :o";
-                document.getElementById("result").style.display = "block";
+                document.getElementById("resultMS").textContent = "You lose :o";
+                document.getElementById("resultMS").style.display = "block";
                 play = false;
             }
             else {
@@ -118,8 +118,8 @@ function resetGame() {
         child.textContent = "";
     })
     document.getElementById("mineCount").textContent = "10";
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").textContent = 'Press "Minesweeper" to start!'
+    document.getElementById("resultMS").style.display = "block";
+    document.getElementById("resultMS").textContent = 'Press "Minesweeper" to start!'
 
     board = [['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']];
 }
@@ -127,7 +127,7 @@ function resetGame() {
 function startGame() {
     let mines = [];
     resetGame();
-    document.getElementById("result").style.display = "none";
+    document.getElementById("resultMS").style.display = "none";
     play = true;
     while (mines.length < 10) {
         let randoRow = Math.floor(Math.random() * 9); // y coordinate
@@ -212,5 +212,243 @@ function showMS() {
 function activeTab(input) {
     if (!(input.classList.contains = "active")) {
         input.classList.add(active)
+    }
+}
+
+// ************************************************
+// tic tac toe code
+
+var turns = 0;
+var liveGame = true;
+
+function checkWin() {
+	var div1 = document.getElementById("g1");
+  var div2 = document.getElementById("g2");
+  var div3 = document.getElementById("g3");
+  var div4 = document.getElementById("g4");
+  var div5 = document.getElementById("g5");
+  var div6 = document.getElementById("g6");
+  var div7 = document.getElementById("g7");
+  var div8 = document.getElementById("g8");
+  var div9 = document.getElementById("g9");
+  
+  var div1color = document.getElementById("g1");
+  
+  var resultTTT = document.getElementById("resultTTT");
+  
+  if (div1.textContent !== "" && div1.textContent === div2.textContent && div2.textContent === div3.textContent) {
+  resultTTT.textContent = div1.textContent + " Wins!";
+  liveGame = false;
+  
+  div1.className = "newblank";
+  div2.className = "newblank";
+  div3.className = "newblank";
+  
+  return true;
+  }
+  else if (div4.textContent !== "" && div4.textContent === div5.textContent && div5.textContent === div6.textContent) {
+    	resultTTT.textContent = div4.textContent + " Wins!";
+      liveGame = false;
+      
+      div4.className = "newblank";
+      div5.className = "newblank";
+      div6.className = "newblank"
+      
+      return true;
+  }
+  else if (div7.textContent !== "" && div7.textContent === div8.textContent && div8.textContent === div9.textContent) {
+    	resultTTT.textContent = div7.textContent + " Wins!";
+      liveGame = false;
+      
+      div7.className = "newblank";
+      div8.className = "newblank";
+      div9.className = "newblank";
+      
+      return true;
+  }
+  else if (div1.textContent !== "" && div1.textContent === div4.textContent && div4.textContent === div7.textContent) {
+    	resultTTT.textContent = div1.textContent + " Wins!";
+      liveGame = false;
+      
+      div1.className = "newblank";
+      div4.className = "newblank";
+      div7.className = "newblank";
+      
+      return true;
+  }
+  else if (div2.textContent !== "" && div2.textContent === div5.textContent && div5.textContent === div8.textContent) {
+    	resultTTT.textContent = div2.textContent + " Wins!";
+      liveGame = false;
+      
+      div2.className = "newblank";
+      div5.className = "newblank";
+      div8.className = "newblank";
+      
+      return true;
+  }
+  else if (div3.textContent !== "" && div3.textContent === div6.textContent && div6.textContent === div9.textContent) {
+    	resultTTT.textContent = div3.textContent + " Wins!";
+      liveGame = false;
+      
+      div3.className = "newblank";
+      div6.className = "newblank";
+      div9.className = "newblank";
+      
+      return true;
+  }
+  else if (div1.textContent !== "" && div1.textContent === div5.textContent && div5.textContent === div9.textContent) {
+    	resultTTT.textContent = div1.textContent + " Wins!";
+      liveGame = false;
+      
+      div1.className = "newblank";
+      div5.className = "newblank";
+      div9.className = "newblank";
+      
+      return true;
+  }
+  else if (div3.textContent !== "" && div3.textContent === div5.textContent && div5.textContent === div7.textContent) {
+    	resultTTT.textContent = div3.textContent + " Wins!";
+      liveGame = false;
+      
+      div3.className = "newblank";
+      div5.className = "newblank";
+      div7.className = "newblank";
+      
+      return true;
+  }
+  
+}
+
+function checkTie() {
+	var div1 = document.getElementById("g1");
+  var div2 = document.getElementById("g2");
+  var div3 = document.getElementById("g3");
+  var div4 = document.getElementById("g4");
+  var div5 = document.getElementById("g5");
+  var div6 = document.getElementById("g6");
+  var div7 = document.getElementById("g7");
+  var div8 = document.getElementById("g8");
+  var div9 = document.getElementById("g9");
+  
+  var content1 = div1.textContent;
+  var content2 = div2.textContent;
+  var content3 = div3.textContent;
+  var content4 = div4.textContent;
+  var content5 = div5.textContent;
+  var content6 = div6.textContent;
+  var content7 = div7.textContent;
+  var content8 = div8.textContent;
+  var content9 = div9.textContent;
+  
+  var resultTTT = document.getElementById("resultTTT");
+  
+  if (content1 !== "" && content2 !== "" && content3 !== "" && content4 !== "" && content5 !== "" && content6 !== "" && content7 !== "" && content8 !== "" && content9 !== "") {
+  	liveGame = false;
+    resultTTT.textContent = "Cat got the game";
+    resultTTT.className = "tie";
+    
+    div1.className = "tieblank";
+    div2.className = "tieblank";
+    div3.className = "tieblank";
+    div4.className = "tieblank";
+    div5.className = "tieblank";
+    div6.className = "tieblank";
+    div7.className = "tieblank";
+    div8.className = "tieblank";
+    div9.className = "tieblank";
+  }
+}
+
+function isEmpty(boxID) {
+	var box = document.getElementById(boxID).textContent;
+  if (box === "") {
+  	return true;
+  }
+  else {
+  return false;
+  }
+}
+
+function fillBox(boxID) {
+	if (liveGame) {
+		var box = document.getElementById(boxID);
+		if (isEmpty(boxID)) {
+  		if (turns % 2 === 0) {
+    		box.textContent = "X";
+    	}
+    	else {
+    		box.textContent = "O";
+    	}
+    	if (checkWin()) {
+      	return true;
+      }
+      else {
+      	checkTie();
+      }
+    	turns++;
+  	}
+  }
+}
+
+function reset() {
+	var div1 = document.getElementById("g1");
+  var div2 = document.getElementById("g2");
+  var div3 = document.getElementById("g3");
+  var div4 = document.getElementById("g4");
+  var div5 = document.getElementById("g5");
+  var div6 = document.getElementById("g6");
+  var div7 = document.getElementById("g7");
+  var div8 = document.getElementById("g8");
+  var div9 = document.getElementById("g9");
+  
+  var resultTTT = document.getElementById("resultTTT");
+  
+  div1.textContent = "";
+  div2.textContent = "";
+  div3.textContent = "";
+  div4.textContent = "";
+  div5.textContent = "";
+  div6.textContent = "";
+  div7.textContent = "";
+  div8.textContent = "";
+  div9.textContent = "";
+  
+  div1.className = "blank";
+  div2.className = "blank";
+  div3.className = "blank";
+  div4.className = "blank";
+  div5.className = "blank";
+  div6.className = "blank";
+  div7.className = "blank";
+  div8.className = "blank";
+  div9.className = "blank";
+  
+  resultTTT.textContent = "";
+  
+  
+  liveGame = true;
+  
+  turns = 0;
+}
+
+
+// function sleep(miliseconds) {
+//    var currentTime = new Date().getTime();
+
+//    while (currentTime + miliseconds >= new Date().getTime()) {
+//    }
+// }
+
+// end of tic tac toe code
+// **********************************************************************
+
+function showTTT() {
+    let tictactoe = document.getElementById("tictactoe");
+
+    if (tictactoe.style.display === "none") {
+        tictactoe.style.display = "flex";
+    } 
+    else {
+        tictactoe.style.display = "none";
     }
 }
