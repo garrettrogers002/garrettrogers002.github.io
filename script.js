@@ -1,8 +1,61 @@
-// this has nothing so far
 // *****************************************************
-// minesweeper stuff
+// General Section Display Logic
 
-let board = [ // 2d array
+function hideAllSections() {
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+}
+
+function showSection(sectionId) {
+    hideAllSections(); 
+    const section = document.getElementById(sectionId); 
+
+
+    if (section) {
+        let displayType; 
+
+
+        if (sectionId === 'playableArea' || sectionId === 'tictactoe') {
+            displayType = 'flex'; 
+        } else {
+            displayType = 'block'; 
+        }
+
+
+        section.style.display = displayType;
+    }
+}
+
+function showHome() {
+    showSection('homeSection');
+}
+
+function showAboutMe() {
+    showSection('aboutMeSection');
+}
+
+function showBooks() {
+    showSection('booksSection');
+}
+
+function showFun() {
+    showSection('funSection');
+}
+
+function showMS() {
+    showSection('playableArea');
+}
+
+function showTTT() {
+    showSection('tictactoe');
+}
+
+// *****************************************************
+// Minesweeper Stuff
+
+let board = [
     ['','','','','','','','',''],
     ['','','','','','','','',''],
     ['','','','','','','','',''],
@@ -17,133 +70,127 @@ let board = [ // 2d array
 let pressedCount = 0;
 let play = false;
 
-// x = col, y = row
-
-function checkWin() {
+function checkWinMS() {
     if (pressedCount === 71) {
         play = false;
         document.getElementById("resultMS").textContent = "You won!!!";
         document.getElementById("resultMS").style.display = "block";
     }
-    return;
 }
 
-
 function updatePress(id) {
-    id.classList.add("pressed")
-    pressedCount+=1; // for some reason when i had it as pressedCount++; the count would get wrong and the player would win prematurely
-    console.log("pressed count: " + pressedCount);
-    checkWin();
+    if (!id.classList.contains("pressed")) {
+        id.classList.add("pressed");
+        pressedCount++;
+        // console.log("pressed count: " + pressedCount); // Original log removed as requested
+        checkWinMS();
+    }
 }
 
 const directions = [
     [-1, 1], [0,1],  [1,1],
     [-1, 0],         [1,0],
     [-1,-1], [0,-1], [1,-1]
-]
-function squareCoords(input) {
-    index = input.id - 1;
-    row = Math.floor(index / 9);
-    col = index % 9;
+];
 
+function squareCoords(input) {
+    let index = parseInt(input.id) - 1;
+    let row = Math.floor(index / 9);
+    let col = index % 9;
     return [col, row];
 }
+
 function coordsToId(coords) {
     let col = coords[0];
     let row = coords[1];
-
     let id = (row * 9) + col + 1;
-
     return id.toString();
 }
 
 function press(input) {
     if (play) {
-        if (input.textContent !== "F") {
-            let coords = squareCoords(input);
+        if (input.textContent === "F" || input.classList.contains("pressed")) {
+            return;
+        }
 
-            let row = coords[1];
-            let col = coords[0];
+        let coords = squareCoords(input);
+        let row = coords[1];
+        let col = coords[0];
 
-            coordsToId(coords);
-            if (board[col][row] === "M") {
-                input.classList.add("bomb");
-                document.getElementById("resultMS").textContent = "You lose :o";
-                document.getElementById("resultMS").style.display = "block";
-                play = false;
-            }
-            else {
-                let mineCount = adjacentMineCount(coords);
-
-                if (mineCount === 0) {
-                    revealEmptySquares([col, row]);
-                }
-                else {
-                    if (!input.classList.contains("pressed")) {
-                        updatePress(input);
-                    }
-                    // checkWin(pressedCount);
-                    input.textContent = mineCount;
-                }
+        if (board[col][row] === "M") {
+            input.classList.add("bomb");
+            document.getElementById("resultMS").textContent = "You lose :o";
+            document.getElementById("resultMS").style.display = "block";
+            play = false;
+        } else {
+            let mineCount = adjacentMineCount(coords);
+            if (mineCount === 0) {
+                revealEmptySquares([col, row]);
+            } else {
+                input.textContent = mineCount;
+                updatePress(input);
             }
         }
     }
 }
 
-function flag(input, event) {;
-    if (play) {
-        event.preventDefault();
+function flag(input, event) {
+    event.preventDefault();
 
+    if (play) {
         if (input.classList.contains("pressed")) return false;
+
+        const mineCountDisplay = document.getElementById("mineCount");
+        let currentMineCount = parseInt(mineCountDisplay.textContent);
 
         if (input.textContent === "F") {
             input.textContent = "";
-            document.getElementById("mineCount").textContent++;
-        }
-        else {
+            mineCountDisplay.textContent = currentMineCount + 1;
+        } else {
             input.textContent = "F";
-
-            document.getElementById("mineCount").textContent--;
+            mineCountDisplay.textContent = currentMineCount - 1;
         }
-        return false;
     }
+    return false;
 }
 
 function resetGame() {
     play = false;
     pressedCount = 0;
-    document.getElementById("parentDiv").querySelectorAll(':scope > *').forEach(child => {
-        child.classList.remove("pressed");
-        child.classList.remove("bomb");
+
+    document.getElementById("parentDiv").querySelectorAll('.square').forEach(child => {
+        child.classList.remove("pressed", "bomb");
         child.textContent = "";
-    })
+    });
+
     document.getElementById("mineCount").textContent = "10";
     document.getElementById("resultMS").style.display = "block";
-    document.getElementById("resultMS").textContent = 'Press "Minesweeper" to start!'
+    document.getElementById("resultMS").textContent = 'Press "Minesweeper" to start!';
 
-    board = [['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']];
-}
+    board = [['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','',''],['','','','','','','','','']];}
 
 function startGame() {
-    let mines = [];
     resetGame();
     document.getElementById("resultMS").style.display = "none";
     play = true;
-    while (mines.length < 10) {
-        let randoRow = Math.floor(Math.random() * 9); // y coordinate
-        let randoCol = Math.floor(Math.random() * 9); // x coordinate
 
-        if (!(board[randoCol][randoRow] === "M")) {
-            mines.push([randoCol, randoRow]);
+    let minesPlaced = 0;
+    while (minesPlaced < 10) {
+        let randoRow = Math.floor(Math.random() * 9);
+        let randoCol = Math.floor(Math.random() * 9);
+
+        if (board[randoCol][randoRow] !== "M") {
             board[randoCol][randoRow] = "M";
+            minesPlaced++;
         }
     }
 }
-function adjacentMineCount(square) {
-    let x = square[0]; // col number
-    let y = square[1]; // row number
 
+function adjacentMineCount(square) {
+    let x = square[0];
+    let y = square[1];
     let adjMineCount = 0;
+
     for (let adjSquare of directions) {
         let newX = x + adjSquare[0];
         let newY = y + adjSquare[1];
@@ -168,287 +215,158 @@ function revealEmptySquares(square) {
 
         let key = x + "," + y;
 
-        if (visitedSquares.has(key)) return;
-        visitedSquares.add(key);
-
-        let squareId = coordsToId([x,y]);
+        let squareId = coordsToId([x, y]);
         let squareDiv = document.getElementById(squareId);
 
-        if (squareDiv.textContent === "F") return;
-
-        if (!squareDiv.classList.contains("pressed")) {
-            updatePress(squareDiv);
+        if (!squareDiv || visitedSquares.has(key) || squareDiv.textContent === "F" || squareDiv.classList.contains("pressed")) {
+             return;
         }
 
-        let mineCount = adjacentMineCount([x,y]);
+        visitedSquares.add(key);
+
+        updatePress(squareDiv);
+
+        let mineCount = adjacentMineCount([x, y]);
 
         if (mineCount > 0) {
             squareDiv.textContent = mineCount;
             return;
         }
 
-        for ( let direction of directions) {
-            let newX = x + direction[0];
-            let newY = y + direction[1];
-
-            recursivePart(newX,newY);
+        for (let direction of directions) {
+            recursivePart(x + direction[0], y + direction[1]);
         }
     }
+
     recursivePart(col, row);
-}
-// end of minesweeper code
-// *************************************************
-
-function showMS() {
-    let playableArea = document.getElementById("playableArea");
-
-    if (playableArea.style.display === "flex") {
-        playableArea.style.display = "none";
-    }
-    else {
-        playableArea.style.display = "flex";
-    }
-}
-function activeTab(input) {
-    if (!(input.classList.contains = "active")) {
-        input.classList.add(active)
-    }
 }
 
 // ************************************************
-// tic tac toe code
+// Tic Tac Toe code
 
 var turns = 0;
 var liveGame = true;
 
 function checkWin() {
-	var div1 = document.getElementById("g1");
-  var div2 = document.getElementById("g2");
-  var div3 = document.getElementById("g3");
-  var div4 = document.getElementById("g4");
-  var div5 = document.getElementById("g5");
-  var div6 = document.getElementById("g6");
-  var div7 = document.getElementById("g7");
-  var div8 = document.getElementById("g8");
-  var div9 = document.getElementById("g9");
-  
-  var div1color = document.getElementById("g1");
-  
-  var resultTTT = document.getElementById("resultTTT");
-  
-  if (div1.textContent !== "" && div1.textContent === div2.textContent && div2.textContent === div3.textContent) {
-  resultTTT.textContent = div1.textContent + " Wins!";
-  liveGame = false;
-  
-  div1.className = "newblank";
-  div2.className = "newblank";
-  div3.className = "newblank";
-  
-  return true;
-  }
-  else if (div4.textContent !== "" && div4.textContent === div5.textContent && div5.textContent === div6.textContent) {
-    	resultTTT.textContent = div4.textContent + " Wins!";
-      liveGame = false;
-      
-      div4.className = "newblank";
-      div5.className = "newblank";
-      div6.className = "newblank"
-      
-      return true;
-  }
-  else if (div7.textContent !== "" && div7.textContent === div8.textContent && div8.textContent === div9.textContent) {
-    	resultTTT.textContent = div7.textContent + " Wins!";
-      liveGame = false;
-      
-      div7.className = "newblank";
-      div8.className = "newblank";
-      div9.className = "newblank";
-      
-      return true;
-  }
-  else if (div1.textContent !== "" && div1.textContent === div4.textContent && div4.textContent === div7.textContent) {
-    	resultTTT.textContent = div1.textContent + " Wins!";
-      liveGame = false;
-      
-      div1.className = "newblank";
-      div4.className = "newblank";
-      div7.className = "newblank";
-      
-      return true;
-  }
-  else if (div2.textContent !== "" && div2.textContent === div5.textContent && div5.textContent === div8.textContent) {
-    	resultTTT.textContent = div2.textContent + " Wins!";
-      liveGame = false;
-      
-      div2.className = "newblank";
-      div5.className = "newblank";
-      div8.className = "newblank";
-      
-      return true;
-  }
-  else if (div3.textContent !== "" && div3.textContent === div6.textContent && div6.textContent === div9.textContent) {
-    	resultTTT.textContent = div3.textContent + " Wins!";
-      liveGame = false;
-      
-      div3.className = "newblank";
-      div6.className = "newblank";
-      div9.className = "newblank";
-      
-      return true;
-  }
-  else if (div1.textContent !== "" && div1.textContent === div5.textContent && div5.textContent === div9.textContent) {
-    	resultTTT.textContent = div1.textContent + " Wins!";
-      liveGame = false;
-      
-      div1.className = "newblank";
-      div5.className = "newblank";
-      div9.className = "newblank";
-      
-      return true;
-  }
-  else if (div3.textContent !== "" && div3.textContent === div5.textContent && div5.textContent === div7.textContent) {
-    	resultTTT.textContent = div3.textContent + " Wins!";
-      liveGame = false;
-      
-      div3.className = "newblank";
-      div5.className = "newblank";
-      div7.className = "newblank";
-      
-      return true;
-  }
-  
+    var div1 = document.getElementById("g1");
+    var div2 = document.getElementById("g2");
+    var div3 = document.getElementById("g3");
+    var div4 = document.getElementById("g4");
+    var div5 = document.getElementById("g5");
+    var div6 = document.getElementById("g6");
+    var div7 = document.getElementById("g7");
+    var div8 = document.getElementById("g8");
+    var div9 = document.getElementById("g9");
+
+    var resultTTT = document.getElementById("resultTTT");
+
+    if (div1.textContent !== "" && div1.textContent === div2.textContent && div2.textContent === div3.textContent) {
+        resultTTT.textContent = div1.textContent + " Wins!"; liveGame = false; div1.className = "newblank"; div2.className = "newblank"; div3.className = "newblank"; return true;
+    }
+    if (div4.textContent !== "" && div4.textContent === div5.textContent && div5.textContent === div6.textContent) {
+        resultTTT.textContent = div4.textContent + " Wins!"; liveGame = false; div4.className = "newblank"; div5.className = "newblank"; div6.className = "newblank"; return true;
+    }
+    if (div7.textContent !== "" && div7.textContent === div8.textContent && div8.textContent === div9.textContent) {
+        resultTTT.textContent = div7.textContent + " Wins!"; liveGame = false; div7.className = "newblank"; div8.className = "newblank"; div9.className = "newblank"; return true;
+    }
+    if (div1.textContent !== "" && div1.textContent === div4.textContent && div4.textContent === div7.textContent) {
+        resultTTT.textContent = div1.textContent + " Wins!"; liveGame = false; div1.className = "newblank"; div4.className = "newblank"; div7.className = "newblank"; return true;
+    }
+    if (div2.textContent !== "" && div2.textContent === div5.textContent && div5.textContent === div8.textContent) {
+        resultTTT.textContent = div2.textContent + " Wins!"; liveGame = false; div2.className = "newblank"; div5.className = "newblank"; div8.className = "newblank"; return true;
+    }
+    if (div3.textContent !== "" && div3.textContent === div6.textContent && div6.textContent === div9.textContent) {
+        resultTTT.textContent = div3.textContent + " Wins!"; liveGame = false; div3.className = "newblank"; div6.className = "newblank"; div9.className = "newblank"; return true;
+    }
+    if (div1.textContent !== "" && div1.textContent === div5.textContent && div5.textContent === div9.textContent) {
+        resultTTT.textContent = div1.textContent + " Wins!"; liveGame = false; div1.className = "newblank"; div5.className = "newblank"; div9.className = "newblank"; return true;
+    }
+    if (div3.textContent !== "" && div3.textContent === div5.textContent && div5.textContent === div7.textContent) {
+        resultTTT.textContent = div3.textContent + " Wins!"; liveGame = false; div3.className = "newblank"; div5.className = "newblank"; div7.className = "newblank"; return true;
+    }
+
+    return false;
 }
 
 function checkTie() {
-	var div1 = document.getElementById("g1");
-  var div2 = document.getElementById("g2");
-  var div3 = document.getElementById("g3");
-  var div4 = document.getElementById("g4");
-  var div5 = document.getElementById("g5");
-  var div6 = document.getElementById("g6");
-  var div7 = document.getElementById("g7");
-  var div8 = document.getElementById("g8");
-  var div9 = document.getElementById("g9");
-  
-  var content1 = div1.textContent;
-  var content2 = div2.textContent;
-  var content3 = div3.textContent;
-  var content4 = div4.textContent;
-  var content5 = div5.textContent;
-  var content6 = div6.textContent;
-  var content7 = div7.textContent;
-  var content8 = div8.textContent;
-  var content9 = div9.textContent;
-  
-  var resultTTT = document.getElementById("resultTTT");
-  
-  if (content1 !== "" && content2 !== "" && content3 !== "" && content4 !== "" && content5 !== "" && content6 !== "" && content7 !== "" && content8 !== "" && content9 !== "") {
-  	liveGame = false;
-    resultTTT.textContent = "Cat got the game";
-    resultTTT.className = "tie";
-    
-    div1.className = "tieblank";
-    div2.className = "tieblank";
-    div3.className = "tieblank";
-    div4.className = "tieblank";
-    div5.className = "tieblank";
-    div6.className = "tieblank";
-    div7.className = "tieblank";
-    div8.className = "tieblank";
-    div9.className = "tieblank";
-  }
+    if (liveGame) {
+        var div1 = document.getElementById("g1");
+        var div2 = document.getElementById("g2");
+        var div3 = document.getElementById("g3");
+        var div4 = document.getElementById("g4");
+        var div5 = document.getElementById("g5");
+        var div6 = document.getElementById("g6");
+        var div7 = document.getElementById("g7");
+        var div8 = document.getElementById("g8");
+        var div9 = document.getElementById("g9");
+
+        var resultTTT = document.getElementById("resultTTT");
+
+        if (div1.textContent !== "" && div2.textContent !== "" && div3.textContent !== "" &&
+            div4.textContent !== "" && div5.textContent !== "" && div6.textContent !== "" &&
+            div7.textContent !== "" && div8.textContent !== "" && div9.textContent !== "") {
+
+            liveGame = false;
+            resultTTT.textContent = "Cat got the game";
+            resultTTT.className = "resultTTT tie";
+
+            div1.className = "tieblank"; div2.className = "tieblank"; div3.className = "tieblank";
+            div4.className = "tieblank"; div5.className = "tieblank"; div6.className = "tieblank";
+            div7.className = "tieblank"; div8.className = "tieblank"; div9.className = "tieblank";
+            return true;
+        }
+    }
+     return false;
 }
 
 function isEmpty(boxID) {
 	var box = document.getElementById(boxID).textContent;
-  if (box === "") {
-  	return true;
-  }
-  else {
-  return false;
-  }
+    return box === "";
 }
 
 function fillBox(boxID) {
 	if (liveGame) {
 		var box = document.getElementById(boxID);
 		if (isEmpty(boxID)) {
-  		if (turns % 2 === 0) {
-    		box.textContent = "X";
+            if (turns % 2 === 0) {
+                box.textContent = "X";
+            }
+            else {
+                box.textContent = "O";
+            }
+            turns++;
+
+            if (!checkWin()) {
+                checkTie();
+            }
     	}
-    	else {
-    		box.textContent = "O";
-    	}
-    	if (checkWin()) {
-      	return true;
-      }
-      else {
-      	checkTie();
-      }
-    	turns++;
   	}
-  }
 }
 
-function reset() {
+function resetTTT() {
 	var div1 = document.getElementById("g1");
-  var div2 = document.getElementById("g2");
-  var div3 = document.getElementById("g3");
-  var div4 = document.getElementById("g4");
-  var div5 = document.getElementById("g5");
-  var div6 = document.getElementById("g6");
-  var div7 = document.getElementById("g7");
-  var div8 = document.getElementById("g8");
-  var div9 = document.getElementById("g9");
-  
-  var resultTTT = document.getElementById("resultTTT");
-  
-  div1.textContent = "";
-  div2.textContent = "";
-  div3.textContent = "";
-  div4.textContent = "";
-  div5.textContent = "";
-  div6.textContent = "";
-  div7.textContent = "";
-  div8.textContent = "";
-  div9.textContent = "";
-  
-  div1.className = "blank";
-  div2.className = "blank";
-  div3.className = "blank";
-  div4.className = "blank";
-  div5.className = "blank";
-  div6.className = "blank";
-  div7.className = "blank";
-  div8.className = "blank";
-  div9.className = "blank";
-  
-  resultTTT.textContent = "";
-  
-  
-  liveGame = true;
-  
-  turns = 0;
-}
+    var div2 = document.getElementById("g2");
+    var div3 = document.getElementById("g3");
+    var div4 = document.getElementById("g4");
+    var div5 = document.getElementById("g5");
+    var div6 = document.getElementById("g6");
+    var div7 = document.getElementById("g7");
+    var div8 = document.getElementById("g8");
+    var div9 = document.getElementById("g9");
 
+    var resultTTT = document.getElementById("resultTTT");
 
-// function sleep(miliseconds) {
-//    var currentTime = new Date().getTime();
+    div1.textContent = ""; div2.textContent = ""; div3.textContent = "";
+    div4.textContent = ""; div5.textContent = ""; div6.textContent = "";
+    div7.textContent = ""; div8.textContent = ""; div9.textContent = "";
 
-//    while (currentTime + miliseconds >= new Date().getTime()) {
-//    }
-// }
+    div1.className = "blank"; div2.className = "blank"; div3.className = "blank";
+    div4.className = "blank"; div5.className = "blank"; div6.className = "blank";
+    div7.className = "blank"; div8.className = "blank"; div9.className = "blank";
 
-// end of tic tac toe code
-// **********************************************************************
+    resultTTT.textContent = "";
+    resultTTT.className = "resultTTT";
 
-function showTTT() {
-    let tictactoe = document.getElementById("tictactoe");
-
-    if (tictactoe.style.display === "none") {
-        tictactoe.style.display = "flex";
-    } 
-    else {
-        tictactoe.style.display = "none";
-    }
+    liveGame = true;
+    turns = 0;
 }

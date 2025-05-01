@@ -7,24 +7,127 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <!-- NAVIGATION STUFF -->
+    <!-- NAV SECTION -->
     <div id="nav">
         <ul>
             <li>
-                <div id="logoDiv">
-                    <img id="logo" src="logo2.png" alt="logo">
+                <div id="logoDiv" onclick="showHome()">
+                    <img id="logo" src="logo3.png" alt="logo">
                 </div>
             </li>
             <li>
-                <div onclick="showMS()">Minesweeper</div>
+                <div class="nav-item" onclick="showAboutMe()">About Me</div>
             </li>
             <li>
-                <div onclick="showTTT()">Tic Tac Toe</div>
+                <div class="nav-item" onclick="showBooks()">Favorite Books</div>
+            </li>
+             <li>
+                <div class="nav-item" onclick="showFun()">FUN</div>
+            </li>
+            <li>
+                <div class="nav-item" onclick="showMS()">Minesweeper</div>
+            </li>
+            <li>
+                <div class="nav-item" onclick="showTTT()">Tic Tac Toe</div>
             </li>
         </ul>
     </div>
-    <!-- MINESWEEPER GAME -->
-    <div id="playableArea">
+    <!-- HOME SECTION -->
+    <div id="homeSection" class="content-section">
+        <h2>Welcome!</h2>
+        <img id="baldMan" src="bald_man.jpg" alt="Me, July 7th, 2023">
+        <p>This to my personal website. Click around to learn more about me, see my favorite books, or play some games that I made!</p>
+        <p>(I didn't make them concept of the games, I just coded them)</p>
+        
+    </div>
+<!-- ABOUT ME SECTION -->
+    <div id="aboutMeSection" class="content-section">
+        <h2>About Me</h2>
+        <img id="freshman" src="freshman.jpg" alt="Pic of me with family freshman year of highschool">
+        <p>
+            Student at SVU, probably a sophmore. From Georgia.
+            Run track and cross country. Enjoy coding stuff. Enjoy reading.
+            Hate front-end stuff.
+        </p>
+        <img id="running" src="runnig.jpg" alt="pic of me sprinting to finish high school senior year">
+    </div>
+<!-- BOOK SECTION -->
+    <div id="booksSection" class="content-section">
+        <h2>Favorite Books</h2>
+        <div class="bookGrid">
+
+            <div class="bookCard">
+                <div class="bookCoverContainer">
+                    <img src="https://m.media-amazon.com/images/I/811iBn28JdL._AC_UF1000,1000_QL80_.jpg" alt="Book cover for The Count of Monte Cristo">
+                    <div class="bookDescription">
+                        <p>A thrilling adventure of wrongful imprisonment, a daring escape, hidden treasure, and methodical revenge against those who betrayed Edmond Dantès.</p>
+                    </div>
+                </div>
+                <p class="bookAuthor">Alexandre Dumas</p>
+            </div>
+
+            <div class="bookCard">
+                <div class="bookCoverContainer">
+                        <img src="https://m.media-amazon.com/images/I/617WkdpG8xL.jpg" alt="Book cover for The Stranger">
+                        <div class="bookDescription">
+                        <p>An exploration of absurdism and existentialism following Meursault, a detached man who commits a senseless act and confronts the indifference of the universe.</p>
+                    </div>
+                </div>
+                <p class="bookAuthor">Albert Camus</p>
+            </div>
+
+            <div class="bookCard">
+                    <div class="bookCoverContainer">
+                    <img src="https://m.media-amazon.com/images/I/712cDO7d73L.jpg" alt="Book cover for The Hobbit">
+                        <div class="bookDescription">
+                        <p>The tale of Bilbo Baggins, a comfortable hobbit whose life changes when he joins a group of dwarves and the wizard Gandalf on a quest to reclaim treasure guarded by the dragon Smaug.</p>
+                    </div>
+                </div>
+                <p class="bookAuthor">J.R.R. Tolkien</p>
+            </div>
+
+        </div>
+    </div>
+<!-- FUN SECTION -->
+    <div id="funSection" class="content-section">
+        <img id="rat" src="https://media.tenor.com/dr3YOOOszlAAAAAM/rat-dance.gif" alt="Dancing Rat GIF" style="display: block; margin: 20px auto;">
+        <h2>Poetry of William Blake</h2>
+        <p>A Divine Image</p>
+        <pre>
+            Cruelty has a human heart,
+            And Jealousy a human face;
+          Terror the human form divine,
+            And Secresy the human dress.
+          
+          The human dress is forged iron,
+            The human form a fiery forge,
+          The human face a furnace sealed,
+            The human heart its hungry gorge.
+        </pre>
+        <h4>AI Analysis</h4>
+        <p>
+            This poem explores the darker aspects of human nature,
+            depicting the destructive emotions of cruelty, jealousy,
+            and terror as distinctly human qualities. The poem's imagery is striking
+            and unsettling, with human body parts used to represent the destructive
+            forces. The repetition of "human" emphasizes the extent to which these
+            negative traits are inherent to humanity.
+        </p>
+        <p>
+            Compared to Blake's other works, this poem is less overtly religious and
+            more focused on the darker aspects of human existence. However,
+            it shares the same themes of innocence and experience, as it depicts 
+            the struggle between good and evil within the human soul.
+        </p>
+        <p>
+            In the context of the time period, this poem reflects the Romantic 
+            movement's fascination with the exploration of the human psyche and 
+            the expression of strong emotions. It also aligns with the Romantic 
+            emphasis on symbolism and the use of nature to represent human qualities.
+        </p>
+    </div>
+<!-- MINESWEEPER SECTION -->
+    <div id="playableArea" class="content-section">
         <div id="titleDiv" onclick="startGame()">Minesweeper</div>
         <div id="minesAndReset">
             <div id="mineCount">10</div>
@@ -121,35 +224,34 @@
             <div id="79" class="square" onclick="press(this)" oncontextmenu="return flag(this, event)"></div>
             <div id="80" class="square" onclick="press(this)" oncontextmenu="return flag(this, event)"></div>
             <div id="81" class="square" onclick="press(this)" oncontextmenu="return flag(this, event)"></div>
-
         </div>
         <div id="resultMS">Press "Minesweeper" to start!</div>
+        <div class="source-link">
+            <a href="https://github.com/garrettrogers002/minesweeper" target="_blank">View Source Code on GitHub</a>
+        </div>
     </div>
-    <!-- END OF MINESWEEPER GAME -->
-
-    <div id="tictactoe">
+<!-- TIC TAC TOE SECTION -->
+    <div id="tictactoe" class="content-section">
         <div class="parent">
           <div id="g1" class="blank" onclick="fillBox('g1')"></div>
           <div id="g2" class="blank" onclick="fillBox('g2')"></div>
           <div id="g3" class="blank" onclick="fillBox('g3')"></div>
-    
+
           <div id="g4" class="blank" onclick="fillBox('g4')"></div>
           <div id="g5" class="blank" onclick="fillBox('g5')"></div>
           <div id="g6" class="blank" onclick="fillBox('g6')"></div>
-    
+
           <div id="g7" class="blank" onclick="fillBox('g7')"></div>
           <div id="g8" class="blank" onclick="fillBox('g8')"></div>
           <div id="g9" class="blank" onclick="fillBox('g9')"></div>
         </div>
         <div id="resetButton">
-          <button id="yolo" type="button" onclick="reset()">
+          <button id="yolo" type="button" onclick="resetTTT()">
           reset
           </button>
         </div>
         <div id="resultTTT" class="resultTTT"></div>
-      </div>
-
-    <!-- <img src="https://media.tenor.com/dr3YOOOszlAAAAAM/rat-dance.gif" alt="dancing rat"> -->
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
