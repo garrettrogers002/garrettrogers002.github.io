@@ -162,7 +162,6 @@ body {
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
-
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -199,9 +198,9 @@ body {
 
 
 #tictactoe {
-     flex-direction: column;
-     align-items: center;
-     padding-top: 0;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0;
 }
 
 
